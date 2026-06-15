@@ -1,8 +1,9 @@
+import Homepage from "../components/Homepage/Homepage.tsx";
+
 export default function Home() {
   return (
     <main className="flex flex-1 items-center justify-center">
-      <h1> French Apartments for Wendo! </h1>
-
+      <Homepage></Homepage>
     </main>
   );
 }
