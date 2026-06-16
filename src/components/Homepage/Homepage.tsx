@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { HomepageWrapper } from './Homepage.styled.ts';
+import { HomepageWrapper } from './Homepage.styled';
 import Image from 'next/image'
 import Link from 'next/link'
 

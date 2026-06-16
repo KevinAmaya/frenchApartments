@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { ListWrapper } from './List.styled.ts';
+import { ListWrapper } from './List.styled';
 import Image from 'next/image'
-import ListClient from './ListClient.tsx';
+import ListClient from './ListClient';
 
 interface ApartmentListing {
   source: string;
