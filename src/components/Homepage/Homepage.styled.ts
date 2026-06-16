@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const HomepageWrapper = styled.div`
+  .homepage {
+    padding-inline: 24px;
+  }
+
   .homepage__title-main { 
     color: yellow;
     font-size: 128px;
@@ -10,6 +14,22 @@ export const HomepageWrapper = styled.div`
   .homepage__title { 
     color: white;
     font-size: 64px;
+  }
+
+  .homepage__nav { 
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  .homepage__text { 
+    font-size: 40px;
+  }
+
+  .homepage__arrow { 
+    height: 100px;
   }
 
   .homepage__gifs { 
