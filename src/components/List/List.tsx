@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { ListWrapper } from './List.styled';
-import Image from 'next/image'
 import ListClient from './ListClient';
+import { imageUrl } from '@/lib/imageUrl';
 
 interface ApartmentListing {
   source: string;
@@ -91,7 +91,7 @@ export default function List() {
     <ListWrapper data-testid="List">
       <div className="list">
         <div className="list__title-wrap">
-          <Image alt="" src="/images/houses.gif" width="100" height="100"></Image>
+          <img alt="" src={imageUrl('/images/houses.gif')} width={100} height={100} />
           <h1 className="list__title"> Apartments: </h1>
         </div>
         <ListClient listings={listings} sections={sections} />
