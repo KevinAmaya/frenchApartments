@@ -1,11 +1,11 @@
-import { lazy, Suspense, ComponentProps } from 'react';
+import { lazy, Suspense } from 'react';
 
 const LazyList = lazy(() => import('./List'));
 
-const List = (props: ComponentProps<typeof LazyList>) => (
-  <Suspense fallback={null}>
-    <LazyList {...props} />
-  </Suspense>
-);
-
-export default List;
+export default function List() {
+  return (
+    <Suspense fallback={null}>
+      <LazyList />
+    </Suspense>
+  );
+}
