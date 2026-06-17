@@ -1,3 +1,4 @@
 export function imageUrl(path: string): string {
-  return path;
+  const basePath = process.env.NODE_ENV === "production" ? "/frenchApartments" : "";
+  return `${basePath}${path}`;
 }
