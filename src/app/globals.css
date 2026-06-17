@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.link-list {
+  display: flex;
+  gap: 24px;
+  margin: 24px auto;
+  justify-content: center;
+}
+
+.link {
+  background-color: lightgray;
+  font-size: 24px;
+  color: black;
+  padding: 0 10px;
+  border: 4px dotted black;
+}
+

@@ -1,22 +1,26 @@
 import styled from 'styled-components';
 
-export const PageBestWrapper= styled.div`
-  .page {
+export const PageBestWrapper = styled.div`
+  .page-best { 
+    display: flex;
     align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
     justify-content: center;
-    height: 100%;
+    flex-direction: column;
   }
 
-  .list__title {
+  .page-best__title { 
     font-size: 64px;
+    margin-inline: 32px;
   }
 
-  .list__title-wrap {
+  .page-best__title-wrap {
     display: flex;
-    flex-direction: row;
+  }
+
+  .page-best__list-best-items {
+    display: flex;
+    margin-block-start: 48px;
+    flex-direction: column;
     gap: 24px;
   }
 `;

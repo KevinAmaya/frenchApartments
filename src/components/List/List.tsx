@@ -3,6 +3,7 @@ import { join } from 'path';
 import { ListWrapper } from './List.styled';
 import ListClient from './ListClient';
 import { imageUrl } from '@/lib/imageUrl';
+import Link from 'next/link'
 
 interface ApartmentListing {
   source: string;
@@ -136,6 +137,14 @@ export default function List() {
 
   return (
     <ListWrapper data-testid="List">
+      <ul className="link-list">
+        <li>
+          <Link className="link" href="/">Home</Link>
+        </li>
+        <li>
+          <Link className="link" href="/best">Best</Link>
+        </li>
+      </ul>
       <div className="list">
         <div className="list__title-wrap">
           <img alt="" src={imageUrl('/images/houses.gif')} width={100} height={100} />

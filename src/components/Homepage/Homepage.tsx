@@ -8,6 +8,14 @@ interface HomepageProps {}
 const Homepage: FC<HomepageProps> = () => (
  <HomepageWrapper data-testid="Homepage">
     <div className="homepage">
+      <ul className="link-list">
+        <li>
+          <Link className="link" href="/best">Best</Link>
+        </li>
+        <li>
+          <Link className="link" href="/lists">List</Link>
+        </li>
+      </ul>
       <div className="homepage__gifs">
         <img alt="" src={imageUrl('/images/france.gif')} width={200} height={150} />
         <img alt="" src={imageUrl('/images/dancebignew.gif')} width={200} height={150} />
