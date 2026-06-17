@@ -8,6 +8,7 @@ interface ApartmentListing {
   size: string;
   price: string;
   bedrooms: string;
+  dateFound: string;
   isGood: string;
   section: string;
 }
@@ -17,7 +18,7 @@ interface ListClientProps {
   sections: string[];
 }
 
-type SortKey = 'source' | 'location' | 'size' | 'price' | 'bedrooms' | null;
+type SortKey = 'source' | 'location' | 'size' | 'price' | 'bedrooms' | 'dateFound' | null;
 type SortOrder = 'asc' | 'desc';
 
 export default function ListClient({ listings, sections }: ListClientProps) {
@@ -47,6 +48,13 @@ export default function ListClient({ listings, sections }: ListClientProps) {
       if (sortKey === 'size' || sortKey === 'price' || sortKey === 'bedrooms') {
         aVal = parseFloat(aVal) || 0;
         bVal = parseFloat(bVal) || 0;
+      }
+
+      // Handle empty dateFound values
+      if (sortKey === 'dateFound') {
+        if (!aVal && !bVal) return 0;
+        if (!aVal) return sortOrder === 'asc' ? 1 : -1;
+        if (!bVal) return sortOrder === 'asc' ? -1 : 1;
       }
 
       if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
@@ -118,6 +126,12 @@ export default function ListClient({ listings, sections }: ListClientProps) {
               >
                 Bedrooms {sortKey === 'bedrooms' && (sortOrder === 'asc' ? '↑' : '↓')}
               </th>
+              <th
+                onClick={() => handleSort('dateFound')}
+                className={`border border-gray-300 px-4 py-2 text-left text-sm cursor-pointer hover:bg-gray-700 ${sortKey === 'dateFound' ? 'font-bold' : ''}`}
+              >
+                Date Found {sortKey === 'dateFound' && (sortOrder === 'asc' ? '↑' : '↓')}
+              </th>
               <th className="border border-gray-300 px-4 py-2 text-left text-sm">Link</th>
             </tr>
           </thead>
@@ -129,6 +143,7 @@ export default function ListClient({ listings, sections }: ListClientProps) {
                 <td className="border border-gray-300 px-4 py-2 text-sm">{listing.size}</td>
                 <td className="border border-gray-300 px-4 py-2 text-sm">{listing.price}</td>
                 <td className="border border-gray-300 px-4 py-2 text-sm">{listing.bedrooms}</td>
+                <td className="border border-gray-300 px-4 py-2 text-sm">{listing.dateFound}</td>
                 <td className="border border-gray-300 px-4 py-2 text-sm">
                   {listing.url ? (
                     <a href={listing.url} target="_blank" rel="noopener noreferrer" className="text-blue-600">

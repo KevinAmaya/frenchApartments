@@ -9,6 +9,13 @@
       "withTest": true,
       "withStory": true,
       "withLazy": true
+    },
+   "page": {
+      "path": "src/pages",
+      "withStyle": true,
+      "withTest": false,
+      "withStory": false,
+      "withLazy": false
     }
   }
 }
