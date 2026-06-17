@@ -6,7 +6,7 @@ interface BestItemProps {
   description: string;
   url: string;
   score: string;
-  imageSrc: string; 
+  price: string;
 }
 
 const BestItem: FC<BestItemProps> = ({ title, description, url, score, price}) => {
