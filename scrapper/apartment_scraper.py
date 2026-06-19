@@ -25,15 +25,35 @@ SEARCHES = [
         "maxResults": 100,
     },
     {
+        "title": "Val-de-Marne (94) - 500-650€",
+        "website": "SeLoger",
+        "url": "https://www.seloger.com/classified-search?distributionTypes=Rent&estateTypes=House,Apartment&locations=eyJwbGFjZUlkIjoiQUQwOEZSMzY2OTQiLCJyYWRpdXMiOjUxLCJwb2x5bGluZSI6Im9sdWtIY2F0TXB2QHp2WWpjRGJ1WHZpR35yVnJlSmpzU2pzTGJ6T2RwTmpsS255T3xvRmJuUHpqQWBtUGN6QXZ2T3d8RnprTl91S2xuTGV9T3BgSmlwU25lR2tqVnBgRGdoWHB1QHVnWXF1QHVnWXFgRGdoWG9lR2tqVnFgSmlwU21uTGV9T3krTl81S3d2T3l8RmFtUGN6QWNuUHxqQW95T3xvRmVwTmpsS2tzTGJ6T3NlSmhzU3dpR35yVmtjRGJ1WHF2QHx2WSIsImNvb3JkaW5hdGVzIjp7ImxhdCI6NDguNzc2MDAxMDAxOTY3NTIsImxuZyI6Mi40MTk2Njk4MTYzOTEyfX0&priceMax=650&priceMin=500&surfaceMin=20&m=classifed_search_results_map_switch_button_to_classified_search_results",
+        "maxResults": 100,
+    },
+    {
         "title": "Hauts-de-Seine (PAP) - 500-650€",
         "website": "PAP",
         "url": "https://www.pap.fr/annonce/locations-appartement-hauts-de-seine-92-g456-du-studio-au-4-pieces-jusqu-a-650-euros",
         "maxResults": 100,
     },
     {
+        "title": "Val-de-Marne (PAP) - 500-650€",
+        "website": "PAP",
+        "url": "https://www.pap.fr/annonce/locations-appartement-val-de-marne-94-g456-du-studio-au-4-pieces-jusqu-a-650-euros",
+        "maxResults": 100,
+    },
+    {
         "title": "Hauts-de-Seine (Leboncoin) - 500-650€",
         "website": "Leboncoin",
         "url": None,  # Not used for Leboncoin; we use API parameters instead
+        "department": "HAUTS_DE_SEINE",
+        "maxResults": 100,
+    },
+    {
+        "title": "Val-de-Marne (Leboncoin) - 500-650€",
+        "website": "Leboncoin",
+        "url": None,  # Not used for Leboncoin; we use API parameters instead
+        "department": "VAL_DE_MARNE",
         "maxResults": 100,
     },
 ]
@@ -209,13 +229,14 @@ def scrape_pap(url: str, max_results: int, date_found: str = None) -> List[Dict[
         driver.quit()
 
 
-def scrape_leboncoin(max_results: int, date_found: str = None, debug: bool = False) -> List[Dict[str, Any]]:
+def scrape_leboncoin(max_results: int, date_found: str = None, debug: bool = False, department: str = "HAUTS_DE_SEINE") -> List[Dict[str, Any]]:
     """Scrape Leboncoin apartments using the lbc library.
 
     Args:
         max_results: Maximum number of listings to collect
         date_found: Date to mark listings with (default: today)
         debug: If True, print attribute keys from first listing to help debug missing data
+        department: Department to search (e.g., "HAUTS_DE_SEINE", "VAL_DE_MARNE")
     """
     if date_found is None:
         date_found = datetime.now().strftime("%Y-%m-%d")
@@ -224,10 +245,13 @@ def scrape_leboncoin(max_results: int, date_found: str = None, debug: bool = Fal
     lbc_rows = []
 
     try:
+        # Get the department object dynamically
+        dept = getattr(lbc.Department, department, lbc.Department.HAUTS_DE_SEINE)
+
         for page in range(1, 30):  # Max 30 pages
             results = client.search(
                 category=lbc.Category.IMMOBILIER_LOCATIONS,
-                locations=lbc.Department.HAUTS_DE_SEINE,
+                locations=dept,
                 price=(400, 700),
                 page=page,
                 limit=100,
@@ -308,7 +332,8 @@ def scrape_all_sources(searches: List[Dict[str, Any]], websites: Optional[List[s
         elif website == "PAP":
             rows = scrape_pap(url, max_results, date_found)
         elif website == "Leboncoin":
-            rows = scrape_leboncoin(max_results, date_found, debug)
+            department = search.get("department", "HAUTS_DE_SEINE")
+            rows = scrape_leboncoin(max_results, date_found, debug, department)
         else:
             print(f"  Unknown website: {website}")
             continue
